@@ -18,6 +18,7 @@
 
 	<artifactId>tycho-gpg-plugin</artifactId>
 	<packaging>maven-plugin</packaging>
+	<version>4.0.6-Talend_v20240307-1032</version>
 
 	<name>Tycho GPG plugin</name>
 	<description>A plugin to produce GPG signatures for p2 artifacts</description>
@@ -58,7 +59,7 @@
 		<dependency>
 			<groupId>org.eclipse.tycho</groupId>
 			<artifactId>tycho-core</artifactId>
-			<version>${project.version}</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 	</dependencies>
 

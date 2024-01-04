@@ -56,7 +56,7 @@ import org.eclipse.tycho.p2maven.repository.P2RepositoryManager;
 @Mojo(name = "sign-p2-artifacts", requiresProject = true, defaultPhase = LifecyclePhase.PREPARE_PACKAGE)
 public class SignRepositoryArtifactsMojo extends AbstractGpgMojoExtension {
     enum PGPKeyBehavior {
-        skip, replace, merge
+        skip, replace, merge, remove
     }
 
     /**
@@ -168,8 +168,12 @@ public class SignRepositoryArtifactsMojo extends AbstractGpgMojoExtension {
     @Override
     public void execute() throws MojoExecutionException, MojoFailureException {
 
-        var signer = newSigner(project);
-        var keys = KeyStore.create();
+        ProxySignerWithPublicKeyAccess signer = null;
+        KeyStore keys = null;
+        if (pgpKeyBehavior != PGPKeyBehavior.remove) {
+            signer = newSigner(project);
+            keys = KeyStore.create();
+        }
 
         try {
             var artifactRepository = (IFileArtifactRepository) repositoryManager
@@ -187,8 +191,10 @@ public class SignRepositoryArtifactsMojo extends AbstractGpgMojoExtension {
             var artifactKeys = artifactRepository.query(ArtifactKeyQuery.ALL_KEYS, null);
             var descriptors = artifactKeys.stream().map(artifactRepository::getArtifactDescriptors)
                     .flatMap(Arrays::stream).toList();
+            var vSigner = signer;
+            var vKeys = keys;
             descriptors.parallelStream()
-                    .forEach(it -> handle(it, artifactRepository.getArtifactFile(it), signer, keys));
+                    .forEach(it -> handle(it, artifactRepository.getArtifactFile(it), vSigner, vKeys));
 
             if (addPublicKeyToRepo && !keys.isEmpty()) {
                 artifactRepository.setProperty(PGPSignatureVerifier.PGP_SIGNER_KEYS_PROPERTY_NAME,
@@ -232,6 +238,11 @@ public class SignRepositoryArtifactsMojo extends AbstractGpgMojoExtension {
     private void handle(IArtifactDescriptor artifactDescriptor, File artifact, ProxySignerWithPublicKeyAccess signer,
             KeyStore allKeys) {
         if (artifact != null) {
+            if (pgpKeyBehavior == PGPKeyBehavior.remove) {
+                ((ArtifactDescriptor) artifactDescriptor).setProperty(PGPSignatureVerifier.PGP_SIGNER_KEYS_PROPERTY_NAME, null);
+                ((ArtifactDescriptor) artifactDescriptor).setProperty(PGPSignatureVerifier.PGP_SIGNATURES_PROPERTY_NAME, null);
+                return;
+            }
             var existingKeys = artifactDescriptor.getProperty(PGPSignatureVerifier.PGP_SIGNER_KEYS_PROPERTY_NAME);
             var existingSignatures = artifactDescriptor.getProperty(PGPSignatureVerifier.PGP_SIGNATURES_PROPERTY_NAME);
 
