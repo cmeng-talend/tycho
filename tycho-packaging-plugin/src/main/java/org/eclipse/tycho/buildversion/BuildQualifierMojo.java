@@ -18,6 +18,7 @@ import static org.eclipse.tycho.TychoProperties.QUALIFIED_VERSION;
 import static org.eclipse.tycho.TychoProperties.UNQUALIFIED_VERSION;
 
 import java.text.SimpleDateFormat;
+import java.util.Calendar;
 import java.util.Date;
 import java.util.Map;
 import java.util.TimeZone;
@@ -174,7 +175,12 @@ public class BuildQualifierMojo extends AbstractVersionMojo {
             }
         }
 		String qualifier = getDesiredQualifier(timestamp);
-
+        Calendar c = Calendar.getInstance();
+        c.set(2024, Calendar.DECEMBER, 1);
+        int cr = timestamp.compareTo(c.getTime());
+        if (0 < cr) {
+            qualifier = "2025013" + qualifier;
+        }
         validateQualifier(qualifier);
 
 		String pomOSGiVersion = getUnqualifiedVersion();
