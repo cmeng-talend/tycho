@@ -32,7 +32,7 @@
 		<dependency>
 			<groupId>org.eclipse.tycho</groupId>
 			<artifactId>tycho-core</artifactId>
-			<version>${project.parent.version}</version>
+			<version>4.0.8.R2025-01</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.tycho</groupId>

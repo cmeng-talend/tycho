@@ -330,6 +330,7 @@ public class TychoMavenLifecycleParticipant extends AbstractMavenLifecyclePartic
                 }
             }
         }
+        versionToProjectsMap.remove("4.0.8.R2025-01");
         if (versionToProjectsMap.size() > 1) {
             List<String> versions = new ArrayList<>(versionToProjectsMap.keySet());
             Collections.sort(versions);

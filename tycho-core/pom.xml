@@ -19,6 +19,7 @@
 		<version>4.0.8</version>
 	</parent>
 	<artifactId>tycho-core</artifactId>
+	<version>4.0.8.R2025-01</version>
 
 	<name>Tycho Core</name>
 	<description>Core Tycho components</description>
@@ -194,37 +195,37 @@
 		<dependency>
 			<groupId>org.eclipse.tycho</groupId>
 			<artifactId>sisu-equinox-launching</artifactId>
-			<version>${project.version}</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.tycho</groupId>
 			<artifactId>sisu-osgi-api</artifactId>
-			<version>${project.version}</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.tycho</groupId>
 			<artifactId>tycho-metadata-model</artifactId>
-			<version>${project.version}</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.tycho</groupId>
 			<artifactId>tycho-spi</artifactId>
-			<version>${project.version}</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.tycho</groupId>
 			<artifactId>p2-maven-plugin</artifactId>
-			<version>${project.version}</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.tycho</groupId>
 			<artifactId>tycho-targetplatform</artifactId>
-			<version>${project.version}</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.tycho</groupId>
 			<artifactId>tycho-p2</artifactId>
-			<version>${project.version}</version>
+			<version>${project.parent.version}</version>
 		</dependency>
 		<dependency>
 			<groupId>org.eclipse.platform</groupId>
@@ -268,6 +269,7 @@
 		<dependency>
 			<groupId>org.eclipse.tycho</groupId>
 			<artifactId>tycho-testing-harness</artifactId>
+			<version>${project.parent.version}</version>
 			<scope>test</scope>
 		</dependency>
 		<dependency>
