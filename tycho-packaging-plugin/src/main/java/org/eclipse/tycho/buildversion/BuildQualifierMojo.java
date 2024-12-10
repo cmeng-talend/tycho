@@ -179,7 +179,7 @@ public class BuildQualifierMojo extends AbstractVersionMojo {
         c.set(2024, Calendar.DECEMBER, 1);
         int cr = timestamp.compareTo(c.getTime());
         if (0 < cr) {
-            qualifier = "2025013" + qualifier;
+            qualifier = Consts.VER_PREFIX + qualifier;
         }
         c.clear();
         validateQualifier(qualifier);

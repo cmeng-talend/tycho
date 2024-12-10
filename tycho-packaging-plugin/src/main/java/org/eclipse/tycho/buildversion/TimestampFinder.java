@@ -80,12 +80,20 @@ public class TimestampFinder {
 
 	private Date parseQualifier(String qualifier, SimpleDateFormat format) {
 		ParsePosition pos = new ParsePosition(0);
-		Date timestamp = format.parse(qualifier, pos);
-		if (timestamp != null && pos.getIndex() == qualifier.length()) {
+        String stamp = getStamp(qualifier);
+		Date timestamp = format.parse(stamp, pos);
+		if (timestamp != null && pos.getIndex() == stamp.length()) {
 			return timestamp;
 		}
 		return discoverTimestamp(qualifier);
 	}
+
+    private String getStamp(String stamp) {
+        if (stamp != null && stamp.startsWith(Consts.VER_PREFIX)) {
+            return stamp.substring(Consts.VER_PREFIX.length());
+        }
+        return stamp;
+    }
 
 	private Date discoverTimestamp(String qualifier) {
 		return findInString(qualifier);
@@ -106,8 +114,9 @@ public class TimestampFinder {
 
     private Date parseTimestamp(String timestampString, SimpleDateFormat format) {
         ParsePosition pos = new ParsePosition(0);
-        Date timestamp = format.parse(timestampString, pos);
-        if (timestamp != null && pos.getIndex() == timestampString.length()) {
+        String stamp = getStamp(timestampString);
+        Date timestamp = format.parse(stamp, pos);
+        if (timestamp != null && pos.getIndex() == stamp.length()) {
             return timestamp;
         }
         return null;
