@@ -181,6 +181,7 @@ public class BuildQualifierMojo extends AbstractVersionMojo {
         if (0 < cr) {
             qualifier = "2025013" + qualifier;
         }
+        c.clear();
         validateQualifier(qualifier);
 
 		String pomOSGiVersion = getUnqualifiedVersion();
