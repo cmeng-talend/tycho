@@ -176,7 +176,7 @@ public class BuildQualifierMojo extends AbstractVersionMojo {
         }
 		String qualifier = getDesiredQualifier(timestamp);
         Calendar c = Calendar.getInstance();
-        c.set(2024, Calendar.DECEMBER, 1);
+        c.set(2025, Calendar.JANUARY, 27);
         int cr = timestamp.compareTo(c.getTime());
         if (0 < cr) {
             qualifier = Consts.VER_PREFIX + qualifier;
